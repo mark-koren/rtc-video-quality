@@ -2,6 +2,7 @@
 import argparse
 import subprocess
 import os
+import pdb
 from video_presets import *
 
 #Define presets here
@@ -11,6 +12,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-p', '--preset', type=str, default=None)
 parser.add_argument('-v', '--videos', nargs='*', default = [])
 parser.add_argument('-a', '--attempts', type=int, default=3)
+parser.add_argument('-c', '--convert', nargs='*', default = [])
 # parser.add_argument('-c', '--clean', nargs='*', default = [])
 clean_arg = parser.add_mutually_exclusive_group(required=False)
 clean_arg.add_argument('--clean', dest='clean', action='store_true')
@@ -55,6 +57,11 @@ for vid in video_list:
 	if not wget_succesful:
 		fail_list.append(vid)
 		print("error code", wget_succesful)
+	else:
+		for vid_format in args.convert:
+			convert_succesful = (subprocess.call(['ffmpeg', '-i', vid_name, vid_name.split('.')[0] + '.' + vid_format]) == 0)
+			if not convert_succesful:
+				print("Failed to convert file: ", vid_name, " -- target: ", vid_name.split('.')[0] + '.' + vid_format)
 
 for vid in fail_list:
 	print("Failed to get: ", vid)

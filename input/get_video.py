@@ -3,6 +3,7 @@ import argparse
 import subprocess
 import os
 import pdb
+import skvideo.io
 from video_presets import *
 
 #Define presets here
@@ -59,6 +60,8 @@ for vid in video_list:
 		print("error code", wget_succesful)
 	else:
 		for vid_format in args.convert:
+			metadata = skvideo.io.ffprobe(skvideo.io.FFmpegReader(vid_name, {}, {}))
+			pdb.set_trace()
 			convert_succesful = (subprocess.call(['ffmpeg', '-i', vid_name, vid_name.split('.')[0] + '.' + vid_format]) == 0)
 			if not convert_succesful:
 				print("Failed to convert file: ", vid_name, " -- target: ", vid_name.split('.')[0] + '.' + vid_format)

@@ -26,6 +26,7 @@ import sys
 import tempfile
 import threading
 import time
+import pdb
 
 libvpx_threads = 4
 
@@ -638,7 +639,12 @@ def start_daemon(func):
   return t
 
 def job_to_string(job):
-    return "%s:%s %dsl%dtl %s %s" % (job['encoder'], job['codec'], job['num_spatial_layers'], job['num_temporal_layers'], ":".join(str(i) for i in job['target_bitrates_kbps']), os.path.basename(job['clip']['input_file']))
+    return "%s:%s %dsl%dtl %s %s" % (job['encoder'],
+                                     job['codec'],
+                                     job['num_spatial_layers'], 
+                                     job['num_temporal_layers'], 
+                                     ":".join(str(i) for i in job['target_bitrates_kbps']), 
+                                     os.path.basename(job['clip']['input_file']))
 
 def worker():
   global args
@@ -652,6 +658,7 @@ def worker():
       if not jobs:
         return
       (job, command, job_temp_dir) = jobs.pop()
+      pdb.set_trace()
 
     (results, error) = run_command(job, command, job_temp_dir, args.encoded_file_dir)
 

@@ -143,7 +143,7 @@ def main():
   current_graph = 1
   total_graphs = len(graph_dict)
 
-  # Set baselie for Bjontgaard calculations
+  # Set baseline for Bjontgaard calculations
   (subdir, graph_name), lines = list(graph_dict.items())[0]
   found_baseline = False
 
@@ -219,12 +219,12 @@ def main():
       ax.legend(loc='best', fancybox=True, framealpha=0.5)
 
       #BD-delta
-      if baseline_points is not None:
-        bd_value = BD_PSNR(R1, value1, x, y)
-        bd_rate = BD_RATE(R1, value1, x, y)
-        bd_temp_dict = {title + '-delta':bd_value,
-                        title + '-rate':bd_rate}
-        bd_dict.update(bd_temp_dict)
+      # if baseline_points is not None:
+      #   bd_value = BD_PSNR(R1, value1, x, y)
+      #   bd_rate = BD_RATE(R1, value1, x, y)
+      #   bd_temp_dict = {title + '-delta':bd_value,
+      #                   title + '-rate':bd_rate}
+      #   bd_dict.update(bd_temp_dict)
 
     if metric == 'encode-time-utilization':
       # Make sure the horizontal reference line at 1.0 can be seen.
